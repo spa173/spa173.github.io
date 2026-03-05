@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursos Educativos Digitales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f0e8;
+      --bg2: #ece6d8;
+      --ink: #1a1410;
+      --muted: #7a6e60;
+      --c1: #c94b2a;
+      --c2: #2a6bc9;
+      --c3: #2a9c5e;
+      --white: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── BARRA DE NAVEGACION ── */
+    nav.barra {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 56px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    }
+
+    nav.barra .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    nav.barra .logo span { color: #f5c842; }
+
+    nav.barra .pestanas {
+      display: flex;
+      gap: 0;
+      height: 100%;
+    }
+
+    nav.barra .pestanas a {
+      display: flex;
+      align-items: center;
+      padding: 0 1.3rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav.barra .pestanas a:hover,
+    nav.barra .pestanas a.activo { color: #fff; border-bottom-color: #f5c842; }
+
+    nav.barra .pestanas a.a-ova:hover,
+    nav.barra .pestanas a.a-ova.activo { border-bottom-color: var(--c1); }
+
+    nav.barra .pestanas a.a-ovi:hover,
+    nav.barra .pestanas a.a-ovi.activo { border-bottom-color: var(--c2); }
+
+    nav.barra .pestanas a.a-cd:hover,
+    nav.barra .pestanas a.a-cd.activo { border-bottom-color: var(--c3); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 6rem 2.5rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 80%, rgba(201,75,42,0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 20%, rgba(42,107,201,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(42,156,94,0.08) 0%, transparent 60%);
+    }
+
+    .hero-label {
+      position: relative;
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #f5c842;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      position: relative;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #f5c842;
+    }
+
+    .hero p {
+      position: relative;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      position: relative;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-hero:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+
+    .btn-hero.ova { background: var(--c1); color: #fff; }
+    .btn-hero.ovi { background: var(--c2); color: #fff; }
+    .btn-hero.cd  { background: var(--c3); color: #fff; }
+
+    /* ── TARJETAS ── */
+    .tarjetas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      background: var(--ink);
+      margin: 0;
+    }
+
+    .tarjeta {
+      background: var(--bg);
+      padding: 3rem 2.5rem;
+      text-decoration: none;
+      color: var(--ink);
+      display: block;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tarjeta:hover { background: var(--bg2); }
+
+    .tarjeta .num {
+      font-family: 'Fraunces', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0.12;
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+    }
+
+    .tarjeta .icono {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .tarjeta .sigla {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 0.4rem;
+    }
+
+    .tarjeta.t-ova .sigla { color: var(--c1); }
+    .tarjeta.t-ovi .sigla { color: var(--c2); }
+    .tarjeta.t-cd  .sigla { color: var(--c3); }
+
+    .tarjeta h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .tarjeta p {
+      font-size: 0.93rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .tarjeta .flecha {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .tarjeta.t-ova .flecha { color: var(--c1); }
+    .tarjeta.t-ovi .flecha { color: var(--c2); }
+    .tarjeta.t-cd  .flecha { color: var(--c3); }
+
+    /* ── VIDEO INTRO ── */
+    .seccion-video {
+      background: var(--bg2);
+      padding: 4rem 2.5rem;
+      text-align: center;
+    }
+
+    .seccion-video h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .seccion-video p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .video-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      background: #000;
+      aspect-ratio: 16/9;
+    }
+
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 1.8rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    footer span { color: #f5c842; }
+
+    /* ── ANIMACIONES ── */
+    @keyframes subirAparecer {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-label  { animation: subirAparecer 0.6s 0.1s both; }
+    .hero h1     { animation: subirAparecer 0.6s 0.2s both; }
+    .hero p      { animation: subirAparecer 0.6s 0.35s both; }
+    .hero-btns   { animation: subirAparecer 0.6s 0.45s both; }
+
+    .tarjeta:nth-child(1) { animation: subirAparecer 0.5s 0.5s both; }
+    .tarjeta:nth-child(2) { animation: subirAparecer 0.5s 0.6s both; }
+    .tarjeta:nth-child(3) { animation: subirAparecer 0.5s 0.7s both; }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACION -->
+  <nav class="barra">
+    <div class="logo">RED<span>.</span>digital</div>
+    <div class="pestanas">
+      <a href="index.html" class="activo">Inicio</a>
+      <a href="ova.html" class="a-ova">OVA</a>
+      <a href="ovi.html" class="a-ovi">OVI</a>
+      <a href="contenidos.html" class="a-cd">Contenidos</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-label">Recursos Educativos Digitales</p>
+    <h1>Aprende con<br><em>tecnolog&iacute;a</em></h1>
+    <p>Explora los principales tipos de recursos educativos digitales utilizados en entornos de aprendizaje modernos.</p>
+    <div class="hero-btns">
+      <a href="ova.html" class="btn-hero ova">&#127891; Ver OVA</a>
+      <a href="ovi.html" class="btn-hero ovi">&#128196; Ver OVI</a>
+      <a href="contenidos.html" class="btn-hero cd">&#128187; Contenidos Digitales</a>
+    </div>
+  </section>
+
+  <!-- TARJETAS -->
+  <section class="tarjetas">
+
+    <a href="ova.html" class="tarjeta t-ova">
+      <span class="num">01</span>
+      <span class="icono">&#127891;</span>
+      <div class="sigla">OVA</div>
+      <h2>Objeto Virtual de Aprendizaje</h2>
+      <p>Unidad digital aut&oacute;noma dise&ntilde;ada para facilitar el aprendizaje de un tema espec&iacute;fico, con actividades y evaluaci&oacute;n integradas.</p>
+      <span class="flecha">Explorar &rarr;</span>
+    </a>
+
+    <a href="ovi.html" class="tarjeta t-ovi">
+      <span class="num">02</span>
+      <span class="icono">&#128196;</span>
+      <div class="sigla">OVI</div>
+      <h2>Objeto Virtual de Informaci&oacute;n</h2>
+      <p>Recurso digital que presenta informaci&oacute;n estructurada sobre un tema, sin requerir una secuencia pedag&oacute;gica completa.</p>
+      <span class="flecha">Explorar &rarr;</span>
+    </a>
+
+    <a href="contenidos.html" class="tarjeta t-cd">
+      <span class="num">03</span>
+      <span class="icono">&#128187;</span>
+      <div class="sigla">CD</div>
+      <h2>Contenidos Digitales</h2>
+      <p>Conjunto amplio de materiales en formato digital que apoyan procesos de ense&ntilde;anza-aprendizaje en entornos virtuales.</p>
+      <span class="flecha">Explorar &rarr;</span>
+    </a>
+
+  </section>
+
+  <!-- VIDEO -->
+  <section class="seccion-video">
+    <h2>&#127916; &iquest;Por qu&eacute; usar recursos digitales?</h2>
+    <p>Conoce la importancia de los recursos educativos digitales en la educaci&oacute;n actual.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/videoseries?list=PLbO8aHhRlkIeTuL0rEBBg7b9RiwHqMp6B"
+              allowfullscreen
+              title="Recursos educativos digitales"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    Recursos Educativos Digitales &middot; 2025 &middot; Elaborado con <span>&#9829;</span>
+  </footer>
+
+</body>
+</html>

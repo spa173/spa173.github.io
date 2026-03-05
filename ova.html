@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OVA &ndash; Objeto Virtual de Aprendizaje</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f0e8; --bg2: #ece6d8; --ink: #1a1410;
+      --muted: #7a6e60; --c: #c94b2a; --white: #fff;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; }
+
+    nav.barra {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink); display: flex; align-items: center;
+      justify-content: space-between; padding: 0 2.5rem; height: 56px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    }
+    nav.barra .logo { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 900; color: #fff; }
+    nav.barra .logo span { color: #f5c842; }
+    nav.barra .pestanas { display: flex; height: 100%; }
+    nav.barra .pestanas a {
+      display: flex; align-items: center; padding: 0 1.3rem;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55); text-decoration: none;
+      border-bottom: 3px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    nav.barra .pestanas a:hover { color: #fff; }
+    nav.barra .pestanas a.activo { color: #fff; border-bottom-color: var(--c); }
+
+    .cabecera {
+      background: var(--c); color: #fff;
+      padding: 5rem 2.5rem 4rem; position: relative; overflow: hidden;
+    }
+    .cabecera::before {
+      content: 'OVA';
+      font-family: 'Fraunces', serif; font-size: 14rem; font-weight: 900;
+      position: absolute; right: -1rem; top: -2rem;
+      opacity: 0.08; line-height: 1; pointer-events: none;
+    }
+    .cabecera .etiqueta { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.8rem; }
+    .cabecera h1 { font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.05; margin-bottom: 1rem; }
+    .cabecera p { font-size: 1.05rem; opacity: 0.85; max-width: 560px; line-height: 1.7; }
+
+    .contenido { max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
+
+    h2 { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; margin-top: 2.5rem; }
+    h2:first-of-type { margin-top: 0; }
+    p { font-size: 0.97rem; line-height: 1.75; color: #3a3028; margin-bottom: 1rem; }
+
+    .separador { border: none; border-top: 2px solid var(--bg2); margin: 2rem 0; }
+
+    /* CARACTERISTICAS */
+    .lista-caract { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .lista-caract li {
+      background: var(--white); border-radius: 8px; padding: 1.2rem 1.4rem;
+      border-left: 4px solid var(--c); font-size: 0.91rem; line-height: 1.5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .lista-caract li strong { display: block; font-weight: 600; margin-bottom: 0.25rem; color: var(--c); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* VIDEO */
+    .bloque-video { background: var(--bg2); border-radius: 10px; padding: 2rem; margin: 2rem 0; }
+    .bloque-video h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .bloque-video p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.2rem; }
+    .video-wrap { border-radius: 8px; overflow: hidden; aspect-ratio: 16/9; background: #000; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* EJEMPLOS */
+    .ejemplos { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .ejemplo-item { background: var(--white); border-radius: 8px; padding: 1.4rem 1rem; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .ejemplo-item .ei { font-size: 2.2rem; display: block; margin-bottom: 0.6rem; }
+    .ejemplo-item span { font-size: 0.85rem; color: var(--muted); }
+
+    /* NAVEGACION INFERIOR */
+    .nav-inferior {
+      background: var(--ink); padding: 2rem 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    }
+    .btn-nav {
+      display: inline-block; padding: 0.7rem 1.6rem; border-radius: 100px;
+      font-size: 0.82rem; font-weight: 500; text-decoration: none;
+      letter-spacing: 0.06em; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+    .btn-nav.inicio { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+    .btn-nav.ovi    { background: #2a6bc9; color: #fff; }
+    .btn-nav.cd     { background: #2a9c5e; color: #fff; }
+
+    footer { background: var(--ink); color: rgba(255,255,255,0.35); text-align: center; padding: 1.4rem; font-size: 0.78rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+    @keyframes subirAparecer { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    .cabecera .etiqueta { animation: subirAparecer 0.5s 0.1s both; }
+    .cabecera h1        { animation: subirAparecer 0.5s 0.2s both; }
+    .cabecera p         { animation: subirAparecer 0.5s 0.3s both; }
+    .contenido          { animation: subirAparecer 0.5s 0.35s both; }
+  </style>
+</head>
+<body>
+
+  <nav class="barra">
+    <div class="logo">RED<span>.</span>digital</div>
+    <div class="pestanas">
+      <a href="index.html">Inicio</a>
+      <a href="ova.html" class="activo">OVA</a>
+      <a href="ovi.html">OVI</a>
+      <a href="contenidos.html">Contenidos</a>
+    </div>
+  </nav>
+
+  <div class="cabecera">
+    <p class="etiqueta">01 &middot; Recurso educativo</p>
+    <h1>Objeto Virtual<br>de Aprendizaje</h1>
+    <p>Unidad digital aut&oacute;noma y reutilizable dise&ntilde;ada con un prop&oacute;sito educativo definido, que integra contenidos, actividades y evaluaci&oacute;n en un solo recurso.</p>
+  </div>
+
+  <div class="contenido">
+
+    <h2>&#128218; &iquest;Qu&eacute; es un OVA?</h2>
+    <p>Un <strong>Objeto Virtual de Aprendizaje (OVA)</strong> es un recurso digital con intenci&oacute;n pedag&oacute;gica clara. Combina texto, im&aacute;genes, audio, video y animaciones para desarrollar una competencia espec&iacute;fica de forma estructurada e interactiva.</p>
+    <p>Son modulares y reutilizables: pueden integrarse en distintos cursos y plataformas LMS (como Moodle, Blackboard, Google Classroom) sin perder su funci&oacute;n educativa.</p>
+
+    <hr class="separador">
+
+    <h2>&#9989; Caracter&iacute;sticas principales</h2>
+    <ul class="lista-caract">
+      <li><strong>Aut&oacute;nomo</strong>Funciona de manera independiente, sin necesitar recursos externos para cumplir su objetivo.</li>
+      <li><strong>Reutilizable</strong>Se puede emplear en m&uacute;ltiples contextos, cursos y plataformas educativas.</li>
+      <li><strong>Interactivo</strong>Incluye actividades que involucran activamente al estudiante en su proceso de aprendizaje.</li>
+      <li><strong>Evaluativo</strong>Contiene mecanismos de verificaci&oacute;n del aprendizaje como cuestionarios o retroalimentaci&oacute;n.</li>
+      <li><strong>Metadatos</strong>Usa est&aacute;ndares como SCORM o LOM para catalogaci&oacute;n y distribuci&oacute;n.</li>
+      <li><strong>Accesible</strong>Disponible desde cualquier dispositivo con acceso a internet.</li>
+    </ul>
+
+    <hr class="separador">
+
+    <h2>&#127916; Video explicativo</h2>
+    <div class="bloque-video">
+      <h3>&#127891; &iquest;C&oacute;mo se construye un OVA?</h3>
+      <p>Este video explica el proceso de dise&ntilde;o y desarrollo de un Objeto Virtual de Aprendizaje.</p>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/EsXwz2wHqhM"
+                allowfullscreen title="Qu&eacute; es un OVA"></iframe>
+      </div>
+    </div>
+
+    <hr class="separador">
+
+    <h2>&#128161; Ejemplos de OVA</h2>
+    <div class="ejemplos">
+      <div class="ejemplo-item"><span class="ei">&#128300;</span><span>Simulaciones de laboratorio</span></div>
+      <div class="ejemplo-item"><span class="ei">&#129518;</span><span>Tutoriales interactivos</span></div>
+      <div class="ejemplo-item"><span class="ei">&#127908;</span><span>M&oacute;dulos de idiomas</span></div>
+      <div class="ejemplo-item"><span class="ei">&#128202;</span><span>Lecciones con cuestionarios</span></div>
+    </div>
+
+    <hr class="separador">
+
+    <h2>&#128279; Enlace de inter&eacute;s</h2>
+    <p>Puedes explorar repositorios de OVA en <a href="https://repository.unad.edu.co" target="_blank" style="color:var(--c); font-weight:500;">UNAD</a> y <a href="https://Colombia aprende.edu.co" target="_blank" style="color:var(--c); font-weight:500;">Colombia Aprende</a>, plataformas con miles de recursos gratuitos.</p>
+
+  </div>
+
+  <div class="nav-inferior">
+    <a href="index.html" class="btn-nav inicio">&larr; Inicio</a>
+    <a href="ovi.html" class="btn-nav ovi">OVI &rarr;</a>
+    <a href="contenidos.html" class="btn-nav cd">Contenidos Digitales &rarr;</a>
+  </div>
+
+  <footer>Recursos Educativos Digitales &middot; 2025</footer>
+
+</body>
+</html>
